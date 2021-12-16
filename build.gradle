@@ -13,6 +13,9 @@ buildscript {
     ext.lifecycle_version = '2.4.0'
 
     ext.koin_version = '3.1.4'
+    ext.retrofit_version = '2.9.0'
+    ext.retrofit_converter_version = '0.8.0'
+    ext.okhttp_version = '4.9.3'
     ext.timber_version = '5.0.1'
     ext.coil_version = '1.4.0'
 

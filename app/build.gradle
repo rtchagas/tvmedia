@@ -70,6 +70,11 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    /* REST APIs */
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$retrofit_converter_version"
+
     /* 3rd party */
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "io.coil-kt:coil:$coil_version"

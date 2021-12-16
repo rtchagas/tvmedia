@@ -23,13 +23,12 @@ abstract class RoboTest : KoinTest {
 
     @Before
     fun init() {
-        // Get the application context via RoboElectric
+        // Get the application context via Robolectric
         targetContext = ApplicationProvider.getApplicationContext()
     }
 
     @After
     fun dispose() {
-        // Stops recording intents and clear the state
         stopKoin()
     }
 }
