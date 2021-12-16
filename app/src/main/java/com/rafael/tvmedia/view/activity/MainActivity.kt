@@ -1,7 +1,8 @@
-package com.rafael.tvmedia
+package com.rafael.tvmedia.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.rafael.tvmedia.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlinx-serialization'
 }
 
 android {
@@ -9,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.rafael.tvmedia"
-        minSdk 24
+        minSdk 26
         targetSdk 30
         versionCode 1
         versionName "1.0"
