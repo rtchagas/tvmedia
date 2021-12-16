@@ -1,0 +1,46 @@
+{
+  "data": [
+    {
+      "broadcast_date_time": "2238-12-31T23:00:00Z",
+      "description": "Utmanare från skolvärlden tar sig an gladiatorerna. Gymnasiestudenten och säsongens yngsta deltagare Hillevi Hermann möter rektorsassistenten Erika Martinsson och vikarieläraren Oskar Sandgren ställs inför gymnasiestudenten Robin Andersson.",
+      "episode": 3,
+      "id": "11979550",
+      "image": "https://img-cdn.b17g.net/ed7172e5-d70f-43d4-b8ad-4f0b357efabe/100.jpg",
+      "is_geo_restricted": true,
+      "is_live": false,
+      "published_date_time": "2238-12-31T23:00:00Z",
+      "region_availibility": "SE",
+      "season": 11,
+      "title": "Gladiatorerna del 3",
+      "type": "episode"
+    },
+    {
+      "broadcast_date_time": "2021-12-17T09:00:00Z",
+      "description": "Svenskt aktualitetsprogram med Malou von Sivers.",
+      "episode": 50,
+      "id": "13735484",
+      "image": "https://img-cdn.b17g.net/932a4ed5-f55f-432c-959c-364ae02279b5/100.jpg",
+      "is_geo_restricted": true,
+      "is_live": true,
+      "published_date_time": "2021-12-16T11:05:00Z",
+      "region_availibility": "SE",
+      "season": 32,
+      "title": "Malou efter tio",
+      "type": "episode"
+    },
+    {
+      "broadcast_date_time": "2021-12-16T15:36:47Z",
+      "episode": -1,
+      "expire_date_time": "2021-12-19T21:59:00Z",
+      "id": "13735813",
+      "image": "https://asset-images.b17g.net/api/v2/img/61bb5d0fe4b09c89287a64e0-1639669007941-.jpg",
+      "is_geo_restricted": false,
+      "is_live": false,
+      "published_date_time": "2021-12-16T15:36:47Z",
+      "region_availibility": "ALL",
+      "season": -1,
+      "title": "Vädret Jönköpings, Kronobergs, Kalmar och Blekinge län",
+      "type": "clip"
+    }
+  ]
+}

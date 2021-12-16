@@ -19,17 +19,17 @@ data class MediaEvent(
     val broadcastsOn: Long,
 
     @SerialName("description")
-    val description: String?,
+    val description: String? = null,
 
     @SerialName("episode")
     val episode: Int,
 
     @SerialName("expire_date_time")
     @Serializable(LongAsDateStringSerializer::class)
-    val expiresOn: Long?,
+    val expiresOn: Long? = null,
 
     @SerialName("id")
-    val id: String,
+    val id: Long,
 
     @SerialName("image")
     val image: String,
@@ -54,6 +54,7 @@ data class MediaEvent(
     val title: String,
 
     @SerialName("type")
+    @Serializable(MediaEventTypeSerializer::class)
     val type: MediaEventType
 )
 
@@ -67,6 +68,7 @@ enum class MediaEventType {
  * into milliseconds since epoch.
  */
 object LongAsDateStringSerializer : KSerializer<Long> {
+
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("LongDate", PrimitiveKind.STRING)
 
@@ -76,6 +78,23 @@ object LongAsDateStringSerializer : KSerializer<Long> {
     }
 
     override fun deserialize(decoder: Decoder): Long {
-        return Instant.parse(decoder.decodeString()).epochSecond
+        return Instant.parse(decoder.decodeString()).toEpochMilli()
+    }
+}
+
+/**
+ * Custom serializer to transform lower case strings into MediaEventType Enum.
+ */
+object MediaEventTypeSerializer : KSerializer<MediaEventType> {
+
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("MediaEventType", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: MediaEventType) {
+        encoder.encodeString(value.name.lowercase())
+    }
+
+    override fun deserialize(decoder: Decoder): MediaEventType {
+        return MediaEventType.valueOf(decoder.decodeString().uppercase())
     }
 }

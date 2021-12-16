@@ -6,12 +6,12 @@ plugins {
 
 android {
 
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.rafael.tvmedia"
         minSdk 26
-        targetSdk 30
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -79,9 +79,28 @@ dependencies {
 
     /* Testing */
     testImplementation "junit:junit:$junit_version"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    testImplementation "io.kotest:kotest-assertions-core:$kotest_version"
 
-    androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    testImplementation "androidx.arch.core:core-testing:$arch_testing_version"
+    testImplementation "androidx.navigation:navigation-testing:$nav_version"
+    testImplementation "androidx.test.ext:junit-ktx:$junit_ext_version"
+    testImplementation "androidx.test:core-ktx:$androidx_test_version"
+    testImplementation "androidx.test:rules:$androidx_test_version"
+    testImplementation "androidx.test:runner:$androidx_test_version"
 
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinx_coroutines_version"
+
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
+
+    testImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+
+    /**
+     * https://developer.android.com/guide/fragments/test
+     * Note: debugImplementation is used here so that the empty activity that FragmentScenario
+     * relies on is accessible by the test target process.
+     */
     debugImplementation "androidx.fragment:fragment-testing:$fragment_testing_version"
 }
