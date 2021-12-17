@@ -1,7 +1,7 @@
 package com.rafael.tvmedia.data.di
 
 /**
- * This must be the only module exposed to outer layers
+ * In a modular approach, this should be the only module list exposed to outer layers.
  */
 val dataModules = arrayOf(
     apiModule,

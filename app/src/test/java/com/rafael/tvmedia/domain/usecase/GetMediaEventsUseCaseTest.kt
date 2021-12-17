@@ -1,8 +1,7 @@
-package com.rafael.tvmedia.data.repository
+package com.rafael.tvmedia.domain.usecase
 
-import com.rafael.tvmedia.data.api.TvGuideApi
+import com.rafael.tvmedia.data.repository.TvGuideRepository
 import com.rafael.tvmedia.model.MediaEvent
-import com.rafael.tvmedia.model.TvGuide
 import io.kotest.matchers.collections.shouldContainExactly
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -16,13 +15,13 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class TvGuideRepositoryTest {
+class GetMediaEventsUseCaseTest {
 
     @MockK
-    private lateinit var mockApi: TvGuideApi
+    private lateinit var mockRepository: TvGuideRepository
 
     // The test subject
-    private lateinit var targetRepository: TvGuideRepositoryImpl
+    private lateinit var targetUseCase: GetMediaEventsUseCase
 
     @Before
     fun setup() {
@@ -30,22 +29,22 @@ class TvGuideRepositoryTest {
         // Init all the mocks
         MockKAnnotations.init(this)
 
-        // Init the target
-        targetRepository = TvGuideRepositoryImpl(api = mockApi)
+        // Init the test subject
+        targetUseCase = GetMediaEventsUseCase(mockRepository)
     }
 
     @Test
-    fun givenApi_whenHasEvents_thenCheckValues() = TestScope().runTest {
+    fun givenUseCase_whenHasEvents_thenCheckValue() = TestScope().runTest {
 
         // Prepare
         val mockEvent: MediaEvent = mockk()
-        coEvery { mockApi.getTvGuide() } returns TvGuide(listOf(mockEvent))
+        coEvery { mockRepository.getMediaEvents() } returns listOf(mockEvent)
 
         // Act
-        val events = targetRepository.getMediaEvents()
+        val events = targetUseCase()
 
         // Assert
-        coVerify { mockApi.getTvGuide() }
+        coVerify { mockRepository.getMediaEvents() }
         events shouldContainExactly listOf(mockEvent)
     }
 }

@@ -2,6 +2,7 @@ package com.rafael.tvmedia
 
 import android.app.Application
 import com.rafael.tvmedia.data.di.dataModules
+import com.rafael.tvmedia.domain.di.domainModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -22,7 +23,8 @@ class TvMediaApplication : Application() {
             androidLogger()
             androidContext(this@TvMediaApplication)
             modules(
-                *dataModules
+                *dataModules,
+                *domainModules
             )
         }
 
