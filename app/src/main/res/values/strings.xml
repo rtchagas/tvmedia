@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TV Media</string>
+    <string name="now_playing_title">Now Playing</string>
 </resources>

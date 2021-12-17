@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TVMedia">
         <activity
-            android:name="com.rafael.tvmedia.app.activity.MainActivity"
+            android:name="com.rafael.tvmedia.app.view.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
