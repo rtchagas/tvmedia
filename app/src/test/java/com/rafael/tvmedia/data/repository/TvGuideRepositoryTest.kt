@@ -10,7 +10,6 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -35,7 +34,7 @@ class TvGuideRepositoryTest {
     }
 
     @Test
-    fun givenApi_whenHasEvents_thenCheckValues() = TestScope().runTest {
+    fun givenApi_whenHasEvents_thenCheckValues() = runTest {
 
         // Prepare
         val mockEvent: MediaEvent = mockk()

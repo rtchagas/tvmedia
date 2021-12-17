@@ -9,5 +9,4 @@ internal val repositoryModule = module {
     single<TvGuideRepository> {
         TvGuideRepositoryImpl(api = get())
     }
-
 }

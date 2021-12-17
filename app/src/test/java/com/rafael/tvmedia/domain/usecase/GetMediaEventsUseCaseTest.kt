@@ -9,7 +9,6 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -34,7 +33,7 @@ class GetMediaEventsUseCaseTest {
     }
 
     @Test
-    fun givenUseCase_whenHasEvents_thenCheckValue() = TestScope().runTest {
+    fun givenUseCase_whenHasEvents_thenCheckValue() = runTest {
 
         // Prepare
         val mockEvent: MediaEvent = mockk()

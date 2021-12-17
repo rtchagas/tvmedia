@@ -1,4 +1,4 @@
-package com.rafael.tvmedia.view.activity
+package com.rafael.tvmedia.app.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

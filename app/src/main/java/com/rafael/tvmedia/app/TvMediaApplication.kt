@@ -1,6 +1,8 @@
-package com.rafael.tvmedia
+package com.rafael.tvmedia.app
 
 import android.app.Application
+import com.rafael.tvmedia.BuildConfig
+import com.rafael.tvmedia.app.di.appModules
 import com.rafael.tvmedia.data.di.dataModules
 import com.rafael.tvmedia.domain.di.domainModules
 import org.koin.android.ext.koin.androidContext
@@ -24,7 +26,8 @@ class TvMediaApplication : Application() {
             androidContext(this@TvMediaApplication)
             modules(
                 *dataModules,
-                *domainModules
+                *domainModules,
+                *appModules
             )
         }
 
