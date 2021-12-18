@@ -21,6 +21,10 @@ class NowPlayingViewModel(
     fun observeMediaEvents(): LiveData<Result<List<MediaEvent>>> = mediaEventsLiveData
 
     fun refreshMediaEvents() = viewModelScope.launch {
-        mediaEventsLiveData.value = resultOf { getMediaEvents() }
+        mediaEventsLiveData.value = resultOf { sortEvents(getMediaEvents()) }
     }
+
+    private fun sortEvents(events: List<MediaEvent>): List<MediaEvent> =
+        events.sortedBy { it.broadcastsOn }
+
 }

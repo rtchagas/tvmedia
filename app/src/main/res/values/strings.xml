@@ -1,13 +1,32 @@
 <resources>
+
     <string name="app_name">TV Media</string>
+
+    <!-- General -->
+
+    <plurals name="all_days">
+        <item quantity="zero">%d days</item>
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+
+    <plurals name="all_hours">
+        <item quantity="zero">%d hours</item>
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+
+    <plurals name="all_minutes">
+        <item quantity="zero">%d minutes</item>
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
 
     <!-- Now Playing -->
     <string name="now_playing_title">Now Playing</string>
     <string name="now_playing_item_season_info">Season %1$d - Episode %2$d</string>
-    <string name="now_playing_item_broadcast_past_hours">%1$d hours and %2$d minutes ago</string>
-    <string name="now_playing_item_broadcast_past_minutes">%1$d minutes ago</string>
-    <string name="now_playing_item_broadcast_future_hours">Watch in hours and %2$d minutes</string>
-    <string name="now_playing_item_broadcast_future_minutes">Watch in %1$d minutes</string>
+    <string name="now_playing_item_broadcast_past">Streamed %s ago</string>
+    <string name="now_playing_item_broadcast_future">Watch in %s</string>
 
     <!-- Content descriptions -->
     <string name="description_media_thumbnail">Media thumbnail</string>

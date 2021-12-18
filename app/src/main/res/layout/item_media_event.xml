@@ -3,12 +3,12 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardElevation="@dimen/item_play_card_elevation"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/margin_medium"
     android:layout_marginTop="@dimen/margin_medium"
-    android:layout_marginEnd="@dimen/margin_medium">
+    android:layout_marginEnd="@dimen/margin_medium"
+    app:cardElevation="@dimen/item_play_card_elevation">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,11 +29,13 @@
 
         <TextView
             android:id="@+id/tv_item_media_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_medium"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/iv_item_media_thumb"
             app:layout_constraintTop_toBottomOf="@id/iv_item_media_thumb"
             tools:text="Vädret Västra Götalands län" />

@@ -12,6 +12,7 @@ import com.rafael.tvmedia.databinding.ItemMediaEventBinding
 import com.rafael.tvmedia.model.MediaEvent
 import com.rafael.tvmedia.model.MediaEventType
 import java.util.concurrent.TimeUnit
+import kotlin.math.abs
 
 class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.MediaItemHolder>() {
 
@@ -77,44 +78,51 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.MediaItemHolder
 
         private fun bindBroadcastTime(event: MediaEvent) {
 
-            val nowMillis = System.currentTimeMillis()
-            val diff = event.broadcastsOn - nowMillis
+            val nowMillis: Long = System.currentTimeMillis()
+            var diff: Long = (event.broadcastsOn - nowMillis)
 
-            val hours = TimeUnit.MILLISECONDS.toHours(diff)
-            val minutes = TimeUnit.MILLISECONDS.toMinutes(diff)
+            val isPast: Boolean = (diff < 0)
 
-            if (diff > 0) {
-                bindBroadcastTimePast(hours, minutes)
-            } else {
-                bindBroadcastTimeFuture(hours, minutes)
-            }
+            // Absolute diff
+            diff = abs(diff)
+
+            val days = TimeUnit.MILLISECONDS.toDays(diff)
+            val hours = TimeUnit.MILLISECONDS.toHours(diff) % HOURS_IN_A_DAY
+            val minutes = TimeUnit.MILLISECONDS.toMinutes(diff) % MINUTES_IN_AN_HOUR
+
+
+            bindBroadcastTimeText(isPast, days, hours, minutes)
         }
 
-        private fun bindBroadcastTimeFuture(hours: Long, minutes: Long) {
-            if (hours > 0) {
-                binding.tvItemMediaBroadcastTime.text = context.getString(
-                    R.string.now_playing_item_broadcast_future_hours,
-                    hours, minutes
-                )
-            } else {
-                binding.tvItemMediaBroadcastTime.text = context.getString(
-                    R.string.now_playing_item_broadcast_future_minutes,
-                    minutes
-                )
-            }
-        }
+        private fun bindBroadcastTimeText(isPast: Boolean, days: Long, hours: Long, minutes: Long) {
 
-        private fun bindBroadcastTimePast(hours: Long, minutes: Long) {
+            val text = StringBuilder()
+
+            if (days > 0) {
+                val daysStr = context.resources
+                    .getQuantityString(R.plurals.all_days, days.toInt(), days)
+                text.append("$daysStr ")
+            }
+
             if (hours > 0) {
-                binding.tvItemMediaBroadcastTime.text = context.getString(
-                    R.string.now_playing_item_broadcast_past_hours,
-                    hours, minutes
-                )
+                val hoursStr = context.resources
+                    .getQuantityString(R.plurals.all_hours, hours.toInt(), hours)
+                text.append("$hoursStr ")
+            }
+
+            // If less then a day, show the minutes
+            if ((days <= 0) && (minutes > 0)) {
+                val minutesStr = context.resources
+                    .getQuantityString(R.plurals.all_minutes, minutes.toInt(), minutes)
+                text.append(minutesStr)
+            }
+
+            if (isPast) {
+                binding.tvItemMediaBroadcastTime.text =
+                    context.getString(R.string.now_playing_item_broadcast_past, text.toString())
             } else {
-                binding.tvItemMediaBroadcastTime.text = context.getString(
-                    R.string.now_playing_item_broadcast_past_minutes,
-                    minutes
-                )
+                binding.tvItemMediaBroadcastTime.text =
+                    context.getString(R.string.now_playing_item_broadcast_future, text.toString())
             }
         }
 
@@ -125,5 +133,11 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.MediaItemHolder
                     .getString(R.string.now_playing_item_season_info, event.season, event.episode)
             }
         }
+
+        companion object {
+            private const val HOURS_IN_A_DAY = 24
+            private const val MINUTES_IN_AN_HOUR = 60
+        }
+
     }
 }
