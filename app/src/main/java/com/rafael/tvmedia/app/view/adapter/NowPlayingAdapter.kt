@@ -58,7 +58,7 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.MediaItemHolder
 
             with(binding) {
 
-                // Thumbnail
+                // Thumbnail via Coil
                 val url = ImageResizeUtil.resize(originalUrl = event.image, height = thumbsHeight)
                 ivItemMediaThumb.load(url) { crossfade(true) }
 

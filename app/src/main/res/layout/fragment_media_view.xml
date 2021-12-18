@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_media_view_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_large" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_media_view_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_large" />
+
+        <ImageView
+            android:id="@+id/iv_media_view_thumb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/description_media_thumbnail"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_gradient_scrim"
+            app:layout_constraintBottom_toBottomOf="@id/iv_media_view_thumb"
+            app:layout_constraintEnd_toEndOf="@id/iv_media_view_thumb"
+            app:layout_constraintStart_toStartOf="@id/iv_media_view_thumb"
+            app:layout_constraintTop_toTopOf="@id/iv_media_view_thumb" />
+
+        <TextView
+            android:id="@+id/tv_media_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_media_view_thumb"
+            app:layout_constraintEnd_toStartOf="@+id/gl_media_view_end"
+            app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
+            tools:text="Malou efter tio" />
+
+        <TextView
+            android:id="@+id/tv_media_view_season_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_media_view_title"
+            tools:text="Season 4 - Episode 12" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_media_view_play"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/all_play"
+            app:icon="@drawable/ic_play_arrow_24"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_media_view_end"
+            app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_media_view_season_info" />
+
+        <ImageView
+            android:id="@+id/btn_media_view_like"
+            style="@style/Button.Medium"
+            android:layout_marginTop="@dimen/margin_large"
+            android:contentDescription="@string/all_like"
+            app:layout_constraintEnd_toStartOf="@+id/btn_media_view_dislike"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_media_view_play"
+            app:srcCompat="@drawable/ic_thumb_up_24" />
+
+        <ImageView
+            android:id="@+id/btn_media_view_dislike"
+            style="@style/Button.Medium"
+            android:contentDescription="@string/all_dislike"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_media_view_like"
+            app:layout_constraintEnd_toStartOf="@+id/btn_media_view_watchlist"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_media_view_like"
+            app:layout_constraintTop_toTopOf="@+id/btn_media_view_like"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_thumb_down_24" />
+
+        <ImageView
+            android:id="@+id/btn_media_view_watchlist"
+            style="@style/Button.Medium"
+            android:contentDescription="@string/all_watchlist"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_media_view_like"
+            app:layout_constraintEnd_toStartOf="@+id/btn_media_view_download"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_media_view_dislike"
+            app:layout_constraintTop_toTopOf="@+id/btn_media_view_like"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/ic_add_box_24" />
+
+        <ImageView
+            android:id="@+id/btn_media_view_download"
+            style="@style/Button.Medium"
+            android:contentDescription="@string/all_download"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_media_view_like"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_media_view_watchlist"
+            app:layout_constraintTop_toTopOf="@+id/btn_media_view_like"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/ic_download_24" />
+
+        <TextView
+            android:id="@+id/tv_media_view_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/all_like"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            app:layout_constraintEnd_toEndOf="@+id/btn_media_view_like"
+            app:layout_constraintStart_toStartOf="@+id/btn_media_view_like"
+            app:layout_constraintTop_toBottomOf="@+id/btn_media_view_like" />
+
+        <TextView
+            android:id="@+id/tv_media_view_dislike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/all_dislike"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            app:layout_constraintEnd_toEndOf="@+id/btn_media_view_dislike"
+            app:layout_constraintStart_toStartOf="@+id/btn_media_view_dislike"
+            app:layout_constraintTop_toBottomOf="@+id/btn_media_view_dislike" />
+
+        <TextView
+            android:id="@+id/tv_media_view_watchlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/all_watchlist"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            app:layout_constraintEnd_toEndOf="@+id/btn_media_view_watchlist"
+            app:layout_constraintStart_toStartOf="@+id/btn_media_view_watchlist"
+            app:layout_constraintTop_toBottomOf="@+id/btn_media_view_watchlist" />
+
+        <TextView
+            android:id="@+id/tv_media_view_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/all_download"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            app:layout_constraintEnd_toEndOf="@+id/btn_media_view_download"
+            app:layout_constraintStart_toStartOf="@+id/btn_media_view_download"
+            app:layout_constraintTop_toBottomOf="@+id/btn_media_view_download" />
+
+        <TextView
+            android:id="@+id/tv_media_view_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintEnd_toStartOf="@+id/gl_media_view_end"
+            app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_media_view_like"
+            tools:text="Utmanare från skolvärlden tar sig an gladiatorerna. Gymnasiestudenten och säsongens yngsta deltagare Hillevi Hermann möter rektorsassistenten Erika Martinsson och vikarieläraren Oskar Sandgren ställs inför gymnasiestudenten Robin Andersson." />
+
+        <TextView
+            android:id="@+id/tv_media_view_broadcast_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/media_view_broadcast_date"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_media_view_description" />
+
+        <TextView
+            android:id="@+id/tv_media_view_broadcast_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_tiny"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_media_view_broadcast_label"
+            tools:text="18/12/2021 19:35" />
+
+        <TextView
+            android:id="@+id/tv_media_view_expires_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/media_view_expire_date"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_media_view_broadcast_value" />
+
+        <TextView
+            android:id="@+id/tv_media_view_expires_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_tiny"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_media_view_expires_label"
+            tools:text="18/12/2021 19:35" />
+
+        <TextView
+            android:id="@+id/tv_media_view_published_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/media_view_published_date"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_media_view_expires_value" />
+
+        <TextView
+            android:id="@+id/tv_media_view_published_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_tiny"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_media_view_published_label"
+            tools:text="18/12/2021 19:35" />
+
+        <TextView
+            android:id="@+id/tv_media_view_region_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/media_view_region_availability"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_media_view_published_value" />
+
+        <TextView
+            android:id="@+id/tv_media_view_region_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_tiny"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_media_view_region_label"
+            tools:text="SE" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>
+

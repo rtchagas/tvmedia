@@ -3,6 +3,11 @@
     <string name="app_name">TV Media</string>
 
     <!-- General -->
+    <string name="all_play">Play</string>
+    <string name="all_like">Like</string>
+    <string name="all_dislike">Dislike</string>
+    <string name="all_watchlist">Watchlist</string>
+    <string name="all_download">Download</string>
 
     <plurals name="all_days">
         <item quantity="zero">%d days</item>
@@ -27,6 +32,13 @@
     <string name="now_playing_item_season_info">Season %1$d - Episode %2$d</string>
     <string name="now_playing_item_broadcast_past">Streamed %s ago</string>
     <string name="now_playing_item_broadcast_future">Watch in %s</string>
+
+    <!-- Media View -->
+    <string name="media_view_description_not_available">Description not available.</string>
+    <string name="media_view_broadcast_date">Broadcast time:</string>
+    <string name="media_view_expire_date">Expires on:</string>
+    <string name="media_view_published_date">Published on:</string>
+    <string name="media_view_region_availability">Region availability:</string>
 
     <!-- Content descriptions -->
     <string name="description_media_thumbnail">Media thumbnail</string>
