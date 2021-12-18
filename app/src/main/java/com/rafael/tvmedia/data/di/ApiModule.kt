@@ -16,9 +16,11 @@ internal val apiModule = module {
 
         val contentType = "application/json".toMediaType()
 
+        val json = Json { ignoreUnknownKeys = true }
+
         Retrofit.Builder()
             .baseUrl("https://tv4-search.b17g.net/")
-            .addConverterFactory(Json.asConverterFactory(contentType))
+            .addConverterFactory(json.asConverterFactory(contentType))
             .build()
     }
 

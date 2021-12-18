@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">TV Media</string>
+
+    <!-- Now Playing -->
     <string name="now_playing_title">Now Playing</string>
+    <string name="now_playing_item_season_info">Season %1$d - Episode %2$d</string>
+    <string name="now_playing_item_broadcast_past_hours">%1$d hours and %2$d minutes ago</string>
+    <string name="now_playing_item_broadcast_past_minutes">%1$d minutes ago</string>
+    <string name="now_playing_item_broadcast_future_hours">Watch in hours and %2$d minutes</string>
+    <string name="now_playing_item_broadcast_future_minutes">Watch in %1$d minutes</string>
+
+    <!-- Content descriptions -->
+    <string name="description_media_thumbnail">Media thumbnail</string>
+
 </resources>
