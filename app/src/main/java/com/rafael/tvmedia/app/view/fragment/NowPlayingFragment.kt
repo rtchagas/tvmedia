@@ -34,6 +34,7 @@ class NowPlayingFragment :
     }
 
     private fun initializeUi() {
+
         with(binding.rvPlayingEvents) {
             layoutManager = GridLayoutManager(
                 requireContext(),
@@ -42,10 +43,12 @@ class NowPlayingFragment :
             setHasFixedSize(true)
             adapter = rvAdapter
         }
+
+        binding.swipePlayingEvents.setOnRefreshListener { refresh() }
     }
 
     private fun refresh() {
-        //TODO: Set loading state
+        // Refresh the items
         viewModel.refreshMediaEvents()
     }
 
@@ -54,10 +57,19 @@ class NowPlayingFragment :
     }
 
     private fun handleMediaEventsResult(result: Result<List<MediaEvent>>) {
+
+        // Cancel the loading state
+        binding.swipePlayingEvents.isRefreshing = false
+
         when (result) {
-            is Result.Success -> rvAdapter.update(result.data)
+            is Result.Success -> handleLoadingSuccess(result.data)
             is Result.Error -> handleLoadingError(result.error)
         }
+    }
+
+    private fun handleLoadingSuccess(events: List<MediaEvent>) {
+        Timber.i("Loaded ${events.size} media items")
+        rvAdapter.update(events)
     }
 
     private fun handleLoadingError(error: Throwable) {

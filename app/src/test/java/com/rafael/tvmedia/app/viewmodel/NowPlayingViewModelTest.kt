@@ -5,11 +5,8 @@ import com.rafael.tvmedia.domain.usecase.GetMediaEventsUseCase
 import com.rafael.tvmedia.model.MediaEvent
 import com.rafael.tvmedia.observer.test
 import com.rafael.tvmedia.rules.MainCoroutineScopeRule
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.coVerify
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -58,5 +55,27 @@ class NowPlayingViewModelTest {
         val expected = resultOf(listOf(mockEvent))
         testObserver.assertValue(expected)
         coVerify { mockGetMediaEvents() }
+    }
+
+    @Test
+    fun givenIsRefreshing_whenHasMultipleEvents_thenCheckSortOrder() = runTest {
+
+        // Prepare
+        val mockEvent1: MediaEvent = mockk {
+            every { broadcastsOn } returns 200L
+        }
+        val mockEvent2: MediaEvent = mockk {
+            every { broadcastsOn } returns 100L
+        }
+
+        coEvery { mockGetMediaEvents() } returns listOf(mockEvent1, mockEvent2)
+
+        // Act
+        val testObserver = targetViewModel.observeMediaEvents().test()
+        targetViewModel.refreshMediaEvents()
+
+        // Assert
+        val expected = resultOf(listOf(mockEvent2, mockEvent1))
+        testObserver.assertValue(expected)
     }
 }
