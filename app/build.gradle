@@ -102,6 +102,7 @@ dependencies {
     testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 
     testImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    testImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
 
     /**
      * https://developer.android.com/guide/fragments/test

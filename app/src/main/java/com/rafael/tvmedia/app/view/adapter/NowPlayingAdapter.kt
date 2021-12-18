@@ -138,6 +138,5 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.MediaItemHolder
             private const val HOURS_IN_A_DAY = 24
             private const val MINUTES_IN_AN_HOUR = 60
         }
-
     }
 }

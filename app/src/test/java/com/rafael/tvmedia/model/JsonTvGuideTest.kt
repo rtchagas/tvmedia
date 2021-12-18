@@ -128,7 +128,7 @@ class JsonTvGuideTest : RoboTest() {
         clip.season shouldBe -1
 
         // Title
-        clip.title shouldBe "Vädret Jönköpings, Kronobergs, Kalmar och Blekinge län"
+        clip.title shouldBe "Vädret Jönköpings län"
 
         // Type
         clip.type shouldBe MediaEventType.CLIP
