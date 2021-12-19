@@ -1,6 +1,8 @@
 package com.rafael.tvmedia.app.view
 
+import androidx.navigation.fragment.findNavController
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.rafael.tvmedia.R
@@ -112,6 +114,34 @@ class NowPlayingFragmentTest : RoboTest() {
                         hasDescendant(withText("Vädret Jönköpings län"))
                     )
                 )
+        }
+    }
+
+    @Test
+    fun givenFragment_whenHasMediaEvents_whenClickOnItem_thenCheckNavigation() {
+
+        // Prepare
+        val scenario = launchFragment<NowPlayingFragment>(
+            destination = R.id.fragment_now_playing
+        )
+
+        // Assert
+        scenario.onFragment {
+
+            // Click on the item
+            onView(withId(R.id.rv_playing_events))
+                .perform(
+                    RecyclerViewActions.actionOnItem<NowPlayingAdapter.MediaItemHolder>(
+                        hasDescendant(withText("Gladiatorerna del 3")),
+                        ViewActions.click()
+                    )
+                )
+        }
+
+        // Assert
+        scenario.onFragment {
+            // Check that we navigated
+            it.findNavController().currentDestination?.id shouldBe R.id.fragment_media_view
         }
     }
 }

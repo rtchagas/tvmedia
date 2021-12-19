@@ -27,8 +27,8 @@ class NowPlayingFragment :
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        require(activity is ThemeableActivity) {
-            Timber.e("Activity must implement ${ThemeableActivity::class.simpleName}")
+        if (activity !is ThemeableActivity) {
+            Timber.w("Activity should implement ${ThemeableActivity::class.simpleName}")
         }
     }
 
@@ -95,6 +95,7 @@ class NowPlayingFragment :
     }
 
     private fun setupToolbar() {
-        (requireActivity() as ThemeableActivity).resetToolbar()
+        // We might be running tests where the root activity is not themeable
+        (requireActivity() as? ThemeableActivity)?.resetToolbar()
     }
 }
