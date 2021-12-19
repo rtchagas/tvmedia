@@ -2,6 +2,7 @@ package com.rafael.tvmedia.app.view.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ import com.rafael.tvmedia.model.MediaEventType
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
-class NowPlayingAdapter(private val listener: (MediaEvent) -> Unit) :
+class NowPlayingAdapter(private val listener: (MediaEvent, View) -> Unit) :
     RecyclerView.Adapter<NowPlayingAdapter.MediaItemHolder>() {
 
     private val mediaItems = mutableListOf<MediaEvent>()
@@ -31,14 +32,8 @@ class NowPlayingAdapter(private val listener: (MediaEvent) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: MediaItemHolder, position: Int) {
-
         val mediaEvent = mediaItems[position]
-
         holder.bind(mediaEvent)
-
-        holder.itemView.setOnClickListener {
-            listener(mediaEvent)
-        }
     }
 
     override fun getItemCount(): Int =
@@ -54,7 +49,7 @@ class NowPlayingAdapter(private val listener: (MediaEvent) -> Unit) :
         notifyDataSetChanged()
     }
 
-    class MediaItemHolder(private val binding: ItemMediaEventBinding) :
+    inner class MediaItemHolder(private val binding: ItemMediaEventBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         private val context = binding.root.context
@@ -69,6 +64,7 @@ class NowPlayingAdapter(private val listener: (MediaEvent) -> Unit) :
                 // Thumbnail via Coil
                 val url = ImageResizeUtil.resize(originalUrl = event.image, height = thumbsHeight)
                 ivItemMediaThumb.load(url) { crossfade(true) }
+                ivItemMediaThumb.transitionName = event.id.toString()
 
                 // Title
                 tvItemMediaTitle.text = event.title
@@ -81,6 +77,9 @@ class NowPlayingAdapter(private val listener: (MediaEvent) -> Unit) :
 
                 // Broadcast Time
                 bindBroadcastTime(event)
+
+                // Click event
+                root.setOnClickListener { listener(event, ivItemMediaThumb) }
             }
         }
 
@@ -136,10 +135,10 @@ class NowPlayingAdapter(private val listener: (MediaEvent) -> Unit) :
                     .getString(R.string.now_playing_item_season_info, event.season, event.episode)
             }
         }
+    }
 
-        companion object {
-            private const val HOURS_IN_A_DAY = 24
-            private const val MINUTES_IN_AN_HOUR = 60
-        }
+    companion object {
+        private const val HOURS_IN_A_DAY = 24
+        private const val MINUTES_IN_AN_HOUR = 60
     }
 }

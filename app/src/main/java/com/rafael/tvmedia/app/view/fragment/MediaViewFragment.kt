@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionInflater
 import coil.load
 import com.rafael.tvmedia.R
 import com.rafael.tvmedia.app.view.activity.ThemeableActivity
@@ -33,8 +34,14 @@ class MediaViewFragment :
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupSharedTransition()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
         setupToolbar()
         initializeUi(args.argMediaEvent)
     }
@@ -53,7 +60,9 @@ class MediaViewFragment :
 
             // Thumbnail via Coil
             val url = ImageResizeUtil.resize(originalUrl = event.image, height = thumbsMaxHeight)
-            ivMediaViewThumb.load(url)
+            ivMediaViewThumb.load(url) {
+                listener { _, _ -> startPostponedEnterTransition() }
+            }
 
             // Title
             tvMediaViewTitle.text = event.title
@@ -84,6 +93,11 @@ class MediaViewFragment :
             // Region
             tvMediaViewRegionValue.text = event.regionAvailability
         }
+    }
+
+    private fun setupSharedTransition() {
+        sharedElementEnterTransition = TransitionInflater.from(requireContext())
+            .inflateTransition(R.transition.shared_media_thumbnail)
     }
 
     private fun toDateString(dateInMillis: Long): String {

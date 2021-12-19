@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.doOnPreDraw
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy
@@ -34,6 +36,9 @@ class NowPlayingFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
 
         setupToolbar()
         initializeUi()
@@ -66,10 +71,15 @@ class NowPlayingFragment :
         viewModel.observeMediaEvents().observe(viewLifecycleOwner, ::handleMediaEventsResult)
     }
 
-    private fun handleMediaEventClick(event: MediaEvent) {
+    private fun handleMediaEventClick(event: MediaEvent, sharedView: View) {
+
         val directions = NowPlayingFragmentDirections
             .actionFragmentNowPlayingToFragmentMediaView(event)
-        findNavController().navigate(directions)
+
+        // Set the shared transition element
+        val extras = FragmentNavigatorExtras(sharedView to "media_view_thumb")
+
+        findNavController().navigate(directions, extras)
     }
 
     private fun handleMediaEventsResult(result: Result<List<MediaEvent>>) {
