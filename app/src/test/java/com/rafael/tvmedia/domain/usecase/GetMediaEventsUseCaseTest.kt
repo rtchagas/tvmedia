@@ -1,6 +1,6 @@
 package com.rafael.tvmedia.domain.usecase
 
-import com.rafael.tvmedia.data.repository.TvGuideRepository
+import com.rafael.tvmedia.data.repository.TvMediaRepository
 import com.rafael.tvmedia.model.MediaEvent
 import io.kotest.matchers.collections.shouldContainExactly
 import io.mockk.MockKAnnotations
@@ -17,7 +17,7 @@ import org.junit.Test
 class GetMediaEventsUseCaseTest {
 
     @MockK
-    private lateinit var mockRepository: TvGuideRepository
+    private lateinit var mockRepository: TvMediaRepository
 
     // The test subject
     private lateinit var targetUseCase: GetMediaEventsUseCase
