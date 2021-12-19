@@ -1,6 +1,8 @@
 package com.rafael.tvmedia.model
 
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -11,6 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.time.Instant
 
+@Parcelize
 @Serializable
 data class MediaEvent(
 
@@ -23,10 +26,6 @@ data class MediaEvent(
 
     @SerialName("episode")
     val episode: Int,
-
-    @SerialName("expire_date_time")
-    @Serializable(LongAsDateStringSerializer::class)
-    val expiresOn: Long? = null,
 
     @SerialName("id")
     val id: Long,
@@ -56,7 +55,7 @@ data class MediaEvent(
     @SerialName("type")
     @Serializable(MediaEventTypeSerializer::class)
     val type: MediaEventType
-)
+) : Parcelable
 
 enum class MediaEventType {
     EPISODE,

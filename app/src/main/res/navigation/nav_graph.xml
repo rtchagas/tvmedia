@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/fragment_now_playing">
     <fragment
         android:id="@+id/fragment_now_playing"
         android:name="com.rafael.tvmedia.app.view.fragment.NowPlayingFragment"
-        android:label="@string/now_playing_title" />
+        android:label="@string/now_playing_title">
+        <action
+            android:id="@+id/action_fragment_now_playing_to_fragment_media_view"
+            app:destination="@id/fragment_media_view" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_media_view"
+        android:name="com.rafael.tvmedia.app.view.fragment.MediaViewFragment"
+        android:label="">
+        <argument
+            android:name="arg_media_event"
+            app:argType="com.rafael.tvmedia.model.MediaEvent" />
+    </fragment>
 </navigation>

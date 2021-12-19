@@ -11,4 +11,7 @@
     <dimen name="item_play_card_elevation">4dp</dimen>
     <dimen name="item_play_event_height">180dp</dimen>
 
+    <!-- Image downloading -->
+    <dimen name="media_view_thumbs_max_height">320dp</dimen>
+
 </resources>

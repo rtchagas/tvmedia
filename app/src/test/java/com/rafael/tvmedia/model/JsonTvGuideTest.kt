@@ -56,9 +56,6 @@ class JsonTvGuideTest : RoboTest() {
         // Episode number
         episode.episode shouldBe 50
 
-        // Expire time
-        episode.expiresOn shouldBe null
-
         // Image
         episode.image shouldBe "https://img-cdn.b17g.net/932a4ed5-f55f-432c-959c-364ae02279b5/100.jpg"
 
@@ -105,9 +102,6 @@ class JsonTvGuideTest : RoboTest() {
 
         // Episode number
         clip.episode shouldBe -1
-
-        // Expire time
-        clip.expiresOn shouldBe 1639951140000
 
         // Image
         clip.image shouldBe "https://asset-images.b17g.net/api/v2/img/61bb5d0fe4b09c89287a64e0-1639669007941-.jpg"

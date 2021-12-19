@@ -14,7 +14,8 @@ import com.rafael.tvmedia.model.MediaEventType
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
-class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.MediaItemHolder>() {
+class NowPlayingAdapter(private val listener: (MediaEvent) -> Unit) :
+    RecyclerView.Adapter<NowPlayingAdapter.MediaItemHolder>() {
 
     private val mediaItems = mutableListOf<MediaEvent>()
 
@@ -30,7 +31,14 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.MediaItemHolder
     }
 
     override fun onBindViewHolder(holder: MediaItemHolder, position: Int) {
-        holder.bind(mediaItems[position])
+
+        val mediaEvent = mediaItems[position]
+
+        holder.bind(mediaEvent)
+
+        holder.itemView.setOnClickListener {
+            listener(mediaEvent)
+        }
     }
 
     override fun getItemCount(): Int =
@@ -52,7 +60,7 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.MediaItemHolder
         private val context = binding.root.context
 
         private val thumbsHeight = context.resources
-            .getDimensionPixelSize(R.dimen.item_play_event_height)
+            .getDimensionPixelSize(R.dimen.media_view_thumbs_max_height)
 
         fun bind(event: MediaEvent) {
 

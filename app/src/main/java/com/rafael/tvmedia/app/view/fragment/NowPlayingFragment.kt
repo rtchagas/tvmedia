@@ -3,9 +3,11 @@ package com.rafael.tvmedia.app.view.fragment
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy
 import com.rafael.tvmedia.R
+import com.rafael.tvmedia.app.view.activity.ThemeableActivity
 import com.rafael.tvmedia.app.view.adapter.NowPlayingAdapter
 import com.rafael.tvmedia.app.viewmodel.NowPlayingViewModel
 import com.rafael.tvmedia.app.viewmodel.Result
@@ -19,13 +21,13 @@ class NowPlayingFragment :
 
     private val viewModel: NowPlayingViewModel by inject()
 
-    private val rvAdapter = NowPlayingAdapter().apply {
-        stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
-    }
+    private val rvAdapter = NowPlayingAdapter(::handleMediaEventClick)
+        .apply { stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupToolbar()
         initializeUi()
         registerObservers()
 
@@ -56,6 +58,12 @@ class NowPlayingFragment :
         viewModel.observeMediaEvents().observe(viewLifecycleOwner, ::handleMediaEventsResult)
     }
 
+    private fun handleMediaEventClick(event: MediaEvent) {
+        val directions = NowPlayingFragmentDirections
+            .actionFragmentNowPlayingToFragmentMediaView(event)
+        findNavController().navigate(directions)
+    }
+
     private fun handleMediaEventsResult(result: Result<List<MediaEvent>>) {
 
         // Cancel the loading state
@@ -76,5 +84,9 @@ class NowPlayingFragment :
         Timber.w("Could not load media events", error)
         //TODO: Replace by a snack bar
         Toast.makeText(requireContext(), "Could not load media events", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setupToolbar() {
+        (requireActivity() as ThemeableActivity).resetToolbar()
     }
 }

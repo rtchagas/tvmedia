@@ -49,7 +49,7 @@ inline fun <reified T : Fragment> launchFragmentWithArgs(
 
     val scenario = launchFragmentInContainer<T>(
         initialState = initialState,
-        themeResId = R.style.Theme_TVMedia,
+        themeResId = R.style.AppTheme,
         fragmentArgs = navArgs
     )
 
