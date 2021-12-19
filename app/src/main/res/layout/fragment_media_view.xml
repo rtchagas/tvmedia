@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/iv_media_view_thumb"
             app:layout_constraintEnd_toStartOf="@+id/gl_media_view_end"
             app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
@@ -71,7 +72,7 @@
             tools:visibility="visible" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_media_view_play"
+            android:id="@+id/btn_media_view_action"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_medium"
@@ -92,7 +93,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_media_view_play"
+            app:layout_constraintTop_toBottomOf="@+id/btn_media_view_action"
             app:srcCompat="@drawable/ic_thumb_up_24" />
 
         <ImageView

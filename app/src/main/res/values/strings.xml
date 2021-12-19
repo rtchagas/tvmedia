@@ -4,6 +4,7 @@
 
     <!-- General -->
     <string name="all_play">Play</string>
+    <string name="all_remind_me">Remind me</string>
     <string name="all_like">Like</string>
     <string name="all_dislike">Dislike</string>
     <string name="all_watchlist">Watchlist</string>

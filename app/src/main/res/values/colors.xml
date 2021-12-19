@@ -9,8 +9,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="scrim_start">#FFFFFFFF</color>
-    <color name="scrim_middle">#1FFFFFFF</color>
+    <color name="scrim_start">?android:colorBackground</color>
+    <color name="scrim_middle">#2FFFFFFF</color>
     <color name="scrim_end">#00FFFFFF</color>
 
 </resources>
