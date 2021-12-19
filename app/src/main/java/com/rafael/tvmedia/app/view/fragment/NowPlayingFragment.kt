@@ -1,5 +1,6 @@
 package com.rafael.tvmedia.app.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -23,6 +24,13 @@ class NowPlayingFragment :
 
     private val rvAdapter = NowPlayingAdapter(::handleMediaEventClick)
         .apply { stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        require(activity is ThemeableActivity) {
+            Timber.e("Activity must implement ${ThemeableActivity::class.simpleName}")
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

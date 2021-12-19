@@ -1,5 +1,6 @@
 package com.rafael.tvmedia.app.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -11,6 +12,7 @@ import com.rafael.tvmedia.app.view.util.ImageResizeUtil
 import com.rafael.tvmedia.databinding.FragmentMediaViewBinding
 import com.rafael.tvmedia.model.MediaEvent
 import com.rafael.tvmedia.model.MediaEventType
+import timber.log.Timber
 import java.text.DateFormat
 import java.util.*
 
@@ -21,6 +23,13 @@ class MediaViewFragment :
 
     private val thumbsMaxHeight by lazy {
         resources.getDimensionPixelSize(R.dimen.media_view_thumbs_max_height)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        require(activity is ThemeableActivity) {
+            Timber.e("Activity must implement ${ThemeableActivity::class.simpleName}")
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,6 +84,6 @@ class MediaViewFragment :
     }
 
     private fun setupToolbar() {
-        (requireActivity() as ThemeableActivity).setTransparentToolbar()
+        (activity as ThemeableActivity).setTransparentToolbar()
     }
 }
