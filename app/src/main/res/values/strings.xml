@@ -10,6 +10,7 @@
     <string name="all_watchlist">Watchlist</string>
     <string name="all_download">Download</string>
     <string name="all_share">Share</string>
+    <string name="all_undo">Undo</string>
 
     <plurals name="all_days">
         <item quantity="zero">%d days</item>
@@ -42,6 +43,8 @@
     <string name="media_view_published_date">Published on:</string>
     <string name="media_view_region_availability">Region availability:</string>
     <string name="media_view_share_content">"Watch \"%1$s\" on TV Media!\n%2$s</string>
+    <string name="media_view_watchlist_success">Added to your watch list</string>
+    <string name="media_view_download_success">Starting to download media…</string>
 
     <!-- Content descriptions -->
     <string name="description_media_thumbnail">Media thumbnail</string>

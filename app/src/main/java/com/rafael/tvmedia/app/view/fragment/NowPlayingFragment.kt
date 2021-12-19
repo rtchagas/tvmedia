@@ -16,13 +16,13 @@ import com.rafael.tvmedia.app.viewmodel.NowPlayingViewModel
 import com.rafael.tvmedia.app.viewmodel.Result
 import com.rafael.tvmedia.databinding.FragmentNowPlayingBinding
 import com.rafael.tvmedia.model.MediaEvent
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class NowPlayingFragment :
     BaseFragment<FragmentNowPlayingBinding>(FragmentNowPlayingBinding::inflate) {
 
-    private val viewModel: NowPlayingViewModel by inject()
+    private val viewModel: NowPlayingViewModel by viewModel()
 
     private val rvAdapter = NowPlayingAdapter(::handleMediaEventClick)
         .apply { stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY }

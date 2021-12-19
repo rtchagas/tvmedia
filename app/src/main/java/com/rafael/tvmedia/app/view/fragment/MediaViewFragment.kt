@@ -9,19 +9,24 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.transition.Transition
 import androidx.transition.TransitionInflater
 import androidx.transition.TransitionListenerAdapter
 import coil.load
+import com.google.android.material.snackbar.Snackbar
 import com.rafael.tvmedia.R
 import com.rafael.tvmedia.app.view.activity.ThemeableActivity
 import com.rafael.tvmedia.app.view.util.ImageResizeUtil
+import com.rafael.tvmedia.app.viewmodel.MediaViewViewModel
 import com.rafael.tvmedia.databinding.FragmentMediaViewBinding
 import com.rafael.tvmedia.model.MediaEvent
 import com.rafael.tvmedia.model.MediaEventType
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.text.DateFormat
 import java.util.*
@@ -29,6 +34,8 @@ import java.util.*
 
 class MediaViewFragment :
     BaseFragment<FragmentMediaViewBinding>(FragmentMediaViewBinding::inflate) {
+
+    private val viewModel: MediaViewViewModel by viewModel()
 
     private val args: MediaViewFragmentArgs by navArgs()
 
@@ -54,6 +61,15 @@ class MediaViewFragment :
         setHasOptionsMenu(true)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        setupToolbar()
+
+        viewModel.mediaEvent = args.argMediaEvent
+        initializeUi()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_media_view, menu)
@@ -67,13 +83,6 @@ class MediaViewFragment :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
-        setupToolbar()
-        initializeUi(args.argMediaEvent)
-    }
-
     private fun bindSeasonInfo(event: MediaEvent) {
         if (event.season > 0) {
             binding.tvMediaViewSeasonInfo.isVisible = true
@@ -82,16 +91,56 @@ class MediaViewFragment :
         }
     }
 
-    private fun initializeUi(event: MediaEvent) {
+    private fun handleLike() = lifecycleScope.launchWhenResumed {
+        if (viewModel.like()) {
+            toggleLikeState(true)
+        }
+    }
+
+    private fun handleDislike() = lifecycleScope.launchWhenResumed {
+        if (viewModel.dislike()) {
+            toggleLikeState(false)
+        }
+    }
+
+    private fun handleAddToWatchList() = lifecycleScope.launchWhenResumed {
+        if (viewModel.addToWatchList()) {
+            Snackbar
+                .make(requireView(), R.string.media_view_watchlist_success, Snackbar.LENGTH_LONG)
+                .setAction(R.string.all_undo) { }
+                .show()
+        }
+    }
+
+    private fun handleDownload() = lifecycleScope.launchWhenResumed {
+        if (viewModel.download()) {
+            Snackbar.make(requireView(), R.string.media_view_download_success, Snackbar.LENGTH_LONG)
+                .show()
+        }
+    }
+
+    private fun loadMediaThumbnail(event: MediaEvent, imageView: ImageView) {
+        val url = ImageResizeUtil.resize(originalUrl = event.image, height = thumbsMaxHeight)
+        imageView.load(url) {
+            // Only perform the shared transition when the thumbnail is loaded
+            listener(
+                onSuccess = { _, _ -> startPostponedEnterTransition() },
+                onError = { _, ex ->
+                    Timber.w("Could not load image for media ${event.id}: $ex")
+                    startPostponedEnterTransition()
+                }
+            )
+        }
+    }
+
+    private fun initializeUi() {
+
+        val event = viewModel.mediaEvent
 
         with(binding) {
 
             // Thumbnail via Coil
-            val url = ImageResizeUtil.resize(originalUrl = event.image, height = thumbsMaxHeight)
-            ivMediaViewThumb.load(url) {
-                // Only perform the shared transition when the thumbnail is loaded
-                listener { _, _ -> startPostponedEnterTransition() }
-            }
+            loadMediaThumbnail(event, ivMediaViewThumb)
 
             // Title
             tvMediaViewTitle.text = event.title
@@ -122,6 +171,17 @@ class MediaViewFragment :
             // Region
             tvMediaViewRegionValue.text = event.regionAvailability
         }
+
+        setupClickListeners()
+    }
+
+    private fun setupClickListeners() {
+        with(binding) {
+            btnMediaViewLike.setOnClickListener { handleLike() }
+            btnMediaViewDislike.setOnClickListener { handleDislike() }
+            btnMediaViewWatchlist.setOnClickListener { handleAddToWatchList() }
+            btnMediaViewDownload.setOnClickListener { handleDownload() }
+        }
     }
 
     private fun setupSharedTransition() {
@@ -133,11 +193,6 @@ class MediaViewFragment :
                     }
                 })
             }
-    }
-
-    private fun toDateString(dateInMillis: Long): String {
-        val formatter = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT)
-        return formatter.format(Date(dateInMillis))
     }
 
     private fun setupPostSharedTransitionViews() {
@@ -154,13 +209,13 @@ class MediaViewFragment :
 
     private fun shareMediaContent() {
 
-        val mediaEvent: MediaEvent = args.argMediaEvent
+        val event: MediaEvent = viewModel.mediaEvent
 
-        val playStoreUrl = getString(R.string.app_share_url, mediaEvent.id.toString())
+        val playStoreUrl = getString(R.string.app_share_url, event.id.toString())
 
         val payload = getString(
             R.string.media_view_share_content,
-            mediaEvent.title,
+            event.title,
             playStoreUrl
         )
 
@@ -171,5 +226,20 @@ class MediaViewFragment :
 
         val shareIntent = Intent.createChooser(sendIntent, null)
         startActivity(shareIntent)
+    }
+
+    private fun toDateString(dateInMillis: Long): String {
+        val formatter = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT)
+        return formatter.format(Date(dateInMillis))
+    }
+
+    private fun toggleLikeState(isLike: Boolean) = with(binding) {
+        if (isLike) {
+            btnMediaViewLike.setImageResource(R.drawable.ic_thumb_up_on_24)
+            btnMediaViewDislike.setImageResource(R.drawable.ic_thumb_down_24)
+        } else {
+            btnMediaViewLike.setImageResource(R.drawable.ic_thumb_up_24)
+            btnMediaViewDislike.setImageResource(R.drawable.ic_thumb_down_on_24)
+        }
     }
 }
