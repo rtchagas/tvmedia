@@ -100,4 +100,29 @@ class MediaViewFragmentTest : RoboTest() {
             }
         }
     }
+
+    @Test
+    fun givenFragment_whenArgumentIsFuture_thenCheckActionButton() {
+
+        // Prepare
+
+        // Choose a clip to be our test data
+        val mediaEvent: MediaEvent =
+            FakeDataUtil.getFakeMediaItems(targetContext).first()
+
+        // Act
+        val scenario = launchFragmentWithArgs<MediaViewFragment>(
+            destination = R.id.fragment_media_view,
+            navArgs = bundleOf(Pair("arg_media_event", mediaEvent))
+        )
+
+        // Assert
+        scenario.onFragment {
+
+            with(it.binding) {
+                // Action button
+                btnMediaViewAction.text shouldBe targetContext.getString(R.string.all_remind_me)
+            }
+        }
+    }
 }

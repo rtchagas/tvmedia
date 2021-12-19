@@ -55,7 +55,15 @@ data class MediaEvent(
     @SerialName("type")
     @Serializable(MediaEventTypeSerializer::class)
     val type: MediaEventType
-) : Parcelable
+) : Parcelable {
+
+    fun getTimeToBroadcast(): Long {
+        val nowMillis: Long = System.currentTimeMillis()
+        return (broadcastsOn - nowMillis)
+    }
+
+    fun isPastEvent(): Boolean = (getTimeToBroadcast() < 0)
+}
 
 enum class MediaEventType {
     EPISODE,

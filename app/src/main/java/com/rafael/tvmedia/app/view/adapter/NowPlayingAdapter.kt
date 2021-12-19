@@ -86,20 +86,15 @@ class NowPlayingAdapter(private val listener: (MediaEvent) -> Unit) :
 
         private fun bindBroadcastTime(event: MediaEvent) {
 
-            val nowMillis: Long = System.currentTimeMillis()
-            var diff: Long = (event.broadcastsOn - nowMillis)
-
-            val isPast: Boolean = (diff < 0)
-
             // Absolute diff
-            diff = abs(diff)
+            val diff = abs(event.getTimeToBroadcast())
 
             val days = TimeUnit.MILLISECONDS.toDays(diff)
             val hours = TimeUnit.MILLISECONDS.toHours(diff) % HOURS_IN_A_DAY
             val minutes = TimeUnit.MILLISECONDS.toMinutes(diff) % MINUTES_IN_AN_HOUR
 
 
-            bindBroadcastTimeText(isPast, days, hours, minutes)
+            bindBroadcastTimeText(event.isPastEvent(), days, hours, minutes)
         }
 
         private fun bindBroadcastTimeText(isPast: Boolean, days: Long, hours: Long, minutes: Long) {

@@ -3,6 +3,7 @@ package com.rafael.tvmedia.app.view.fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import coil.load
@@ -60,6 +61,13 @@ class MediaViewFragment :
             // Season Info
             if (event.type == MediaEventType.EPISODE) {
                 bindSeasonInfo(event)
+            }
+
+            // Action button based on future or past event
+            if (!event.isPastEvent()) {
+                btnMediaViewAction.text = getString(R.string.all_remind_me)
+                btnMediaViewAction.icon =
+                    ResourcesCompat.getDrawable(resources, R.drawable.ic_alarm_24, null)
             }
 
             // Description
