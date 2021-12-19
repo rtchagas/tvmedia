@@ -1,5 +1,6 @@
 package com.rafael.tvmedia.app.view
 
+import android.content.Intent
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.rafael.tvmedia.R
@@ -10,6 +11,9 @@ import com.rafael.tvmedia.model.MediaEvent
 import com.rafael.tvmedia.robolectric.RoboTest
 import io.kotest.matchers.shouldBe
 import org.junit.Test
+import org.robolectric.Shadows
+import org.robolectric.shadows.ShadowActivity
+
 
 class MediaViewFragmentTest : RoboTest() {
 
@@ -123,6 +127,47 @@ class MediaViewFragmentTest : RoboTest() {
                 // Action button
                 btnMediaViewAction.text shouldBe targetContext.getString(R.string.all_remind_me)
             }
+        }
+    }
+
+    @Test
+    fun givenFragment_whenShareContent_thenCheckPayload() {
+
+        // Prepare
+
+        // Choose a clip to be our test data
+        val mediaEvent: MediaEvent =
+            FakeDataUtil.getFakeMediaItems(targetContext).first()
+
+        // Act
+        val scenario = launchFragmentWithArgs<MediaViewFragment>(
+            destination = R.id.fragment_media_view,
+            navArgs = bundleOf(Pair("arg_media_event", mediaEvent))
+        )
+
+        // Assert
+        scenario.onFragment {
+
+            // Prepare
+            val shadowActivity: ShadowActivity = Shadows.shadowOf(it.requireActivity())
+
+            // Act
+            shadowActivity.clickMenuItem(R.id.action_share)
+            val startedIntent = shadowActivity.nextStartedActivity
+
+            // Assert
+
+            startedIntent.action shouldBe Intent.ACTION_CHOOSER
+
+            val sendIntent = startedIntent.extras!![Intent.EXTRA_INTENT] as Intent
+
+            val expected = targetContext.getString(
+                R.string.media_view_share_content,
+                mediaEvent.title,
+                targetContext.getString(R.string.app_share_url, mediaEvent.id)
+            )
+
+            sendIntent.extras!![Intent.EXTRA_TEXT] shouldBe expected
         }
     }
 }

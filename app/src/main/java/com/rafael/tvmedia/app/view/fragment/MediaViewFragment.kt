@@ -1,7 +1,11 @@
 package com.rafael.tvmedia.app.view.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -47,6 +51,20 @@ class MediaViewFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupSharedTransition()
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_media_view, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_share) {
+            shareMediaContent()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,6 +89,7 @@ class MediaViewFragment :
             // Thumbnail via Coil
             val url = ImageResizeUtil.resize(originalUrl = event.image, height = thumbsMaxHeight)
             ivMediaViewThumb.load(url) {
+                // Only perform the shared transition when the thumbnail is loaded
                 listener { _, _ -> startPostponedEnterTransition() }
             }
 
@@ -131,5 +150,26 @@ class MediaViewFragment :
     private fun setupToolbar() {
         // We might be running tests where the root activity is not themeable
         (activity as? ThemeableActivity)?.setTransparentToolbar()
+    }
+
+    private fun shareMediaContent() {
+
+        val mediaEvent: MediaEvent = args.argMediaEvent
+
+        val playStoreUrl = getString(R.string.app_share_url, mediaEvent.id.toString())
+
+        val payload = getString(
+            R.string.media_view_share_content,
+            mediaEvent.title,
+            playStoreUrl
+        )
+
+        val sendIntent: Intent = Intent(Intent.ACTION_SEND).apply {
+            putExtra(Intent.EXTRA_TEXT, payload)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 }
