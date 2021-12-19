@@ -3,10 +3,14 @@ package com.rafael.tvmedia.app.view.fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
+import androidx.transition.Transition
 import androidx.transition.TransitionInflater
+import androidx.transition.TransitionListenerAdapter
 import coil.load
 import com.rafael.tvmedia.R
 import com.rafael.tvmedia.app.view.activity.ThemeableActivity
@@ -18,10 +22,16 @@ import timber.log.Timber
 import java.text.DateFormat
 import java.util.*
 
+
 class MediaViewFragment :
     BaseFragment<FragmentMediaViewBinding>(FragmentMediaViewBinding::inflate) {
 
     private val args: MediaViewFragmentArgs by navArgs()
+
+    private val fadeInAnimation: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+            .apply { fillAfter = true }
+    }
 
     private val thumbsMaxHeight by lazy {
         resources.getDimensionPixelSize(R.dimen.media_view_thumbs_max_height)
@@ -97,12 +107,25 @@ class MediaViewFragment :
 
     private fun setupSharedTransition() {
         sharedElementEnterTransition = TransitionInflater.from(requireContext())
-            .inflateTransition(R.transition.shared_media_thumbnail)
+            .inflateTransition(R.transition.shared_media_thumbnail).apply {
+                addListener(object : TransitionListenerAdapter() {
+                    override fun onTransitionEnd(transition: Transition) {
+                        setupPostSharedTransitionViews()
+                    }
+                })
+            }
     }
 
     private fun toDateString(dateInMillis: Long): String {
         val formatter = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT)
         return formatter.format(Date(dateInMillis))
+    }
+
+    private fun setupPostSharedTransitionViews() {
+        with(binding) {
+            scrimMediaViewThumb.startAnimation(fadeInAnimation)
+            tvMediaViewTitle.startAnimation(fadeInAnimation)
+        }
     }
 
     private fun setupToolbar() {

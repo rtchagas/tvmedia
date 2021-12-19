@@ -39,13 +39,16 @@
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <View
+            android:id="@+id/scrim_media_view_thumb"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bg_gradient_scrim"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/iv_media_view_thumb"
             app:layout_constraintEnd_toEndOf="@id/iv_media_view_thumb"
             app:layout_constraintStart_toStartOf="@id/iv_media_view_thumb"
-            app:layout_constraintTop_toTopOf="@id/iv_media_view_thumb" />
+            app:layout_constraintTop_toTopOf="@id/iv_media_view_thumb"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_media_view_title"
@@ -54,10 +57,12 @@
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/iv_media_view_thumb"
             app:layout_constraintEnd_toStartOf="@+id/gl_media_view_end"
             app:layout_constraintStart_toStartOf="@+id/gl_media_view_start"
-            tools:text="Malou efter tio" />
+            tools:text="Malou efter tio"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_media_view_season_info"
