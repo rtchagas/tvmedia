@@ -1,6 +1,6 @@
 package com.rafael.tvmedia.domain.usecase
 
-import com.rafael.tvmedia.data.repository.TvMediaRepository
+import com.rafael.tvmedia.domain.repository.TvMediaRepository
 import com.rafael.tvmedia.model.MediaEvent
 import io.kotest.matchers.collections.shouldContainExactly
 import io.mockk.MockKAnnotations

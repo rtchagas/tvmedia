@@ -1,6 +1,6 @@
 package com.rafael.tvmedia.domain.usecase
 
-import com.rafael.tvmedia.data.repository.TvMediaRepository
+import com.rafael.tvmedia.domain.repository.TvMediaRepository
 
 /**
  * Following clean architecture principles, this class is responsible

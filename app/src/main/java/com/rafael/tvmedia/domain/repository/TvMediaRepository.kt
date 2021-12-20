@@ -1,4 +1,4 @@
-package com.rafael.tvmedia.data.repository
+package com.rafael.tvmedia.domain.repository
 
 import android.net.Uri
 import com.rafael.tvmedia.model.MediaEvent

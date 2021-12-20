@@ -1,7 +1,7 @@
 package com.rafael.tvmedia.domain.usecase
 
 import android.net.Uri
-import com.rafael.tvmedia.data.repository.TvMediaRepository
+import com.rafael.tvmedia.domain.repository.TvMediaRepository
 import io.kotest.matchers.shouldBe
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery

@@ -2,6 +2,7 @@ package com.rafael.tvmedia.data.repository
 
 import android.net.Uri
 import com.rafael.tvmedia.data.api.TvGuideApi
+import com.rafael.tvmedia.domain.repository.TvMediaRepository
 import com.rafael.tvmedia.model.MediaEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

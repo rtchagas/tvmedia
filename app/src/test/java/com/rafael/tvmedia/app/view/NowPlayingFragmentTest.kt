@@ -10,7 +10,7 @@ import com.rafael.tvmedia.app.util.FakeDataUtil
 import com.rafael.tvmedia.app.util.launchFragment
 import com.rafael.tvmedia.app.view.adapter.NowPlayingAdapter
 import com.rafael.tvmedia.app.view.fragment.NowPlayingFragment
-import com.rafael.tvmedia.data.repository.TvMediaRepository
+import com.rafael.tvmedia.domain.repository.TvMediaRepository
 import com.rafael.tvmedia.robolectric.RoboTest
 import io.kotest.matchers.shouldBe
 import io.mockk.MockKAnnotations
