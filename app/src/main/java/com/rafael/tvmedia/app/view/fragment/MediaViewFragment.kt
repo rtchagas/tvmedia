@@ -113,10 +113,10 @@ class MediaViewFragment :
     }
 
     private fun handleDownload() = lifecycleScope.launchWhenResumed {
-        if (viewModel.download()) {
-            Snackbar.make(requireView(), R.string.media_view_download_success, Snackbar.LENGTH_LONG)
-                .show()
-        }
+        val uri = viewModel.download()
+        Timber.d("Downloading media with URI: $uri")
+        Snackbar.make(requireView(), R.string.media_view_download_success, Snackbar.LENGTH_LONG)
+            .show()
     }
 
     private fun loadMediaThumbnail(event: MediaEvent, imageView: ImageView) {

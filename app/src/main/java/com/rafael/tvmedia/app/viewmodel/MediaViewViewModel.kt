@@ -1,11 +1,20 @@
 package com.rafael.tvmedia.app.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
+import com.rafael.tvmedia.domain.usecase.AddMediaEventToWatchListUseCase
+import com.rafael.tvmedia.domain.usecase.DislikeMediaEventUseCase
+import com.rafael.tvmedia.domain.usecase.DownloadMediaEventUseCase
+import com.rafael.tvmedia.domain.usecase.LikeMediaEventUseCase
 import com.rafael.tvmedia.model.MediaEvent
-import kotlinx.coroutines.delay
 import timber.log.Timber
 
-class MediaViewViewModel : ViewModel() {
+class MediaViewViewModel(
+    private val likeMediaEvent: LikeMediaEventUseCase,
+    private val dislikeMediaEvent: DislikeMediaEventUseCase,
+    private val addMediaEventToWatchList: AddMediaEventToWatchListUseCase,
+    private val downloadMediaEvent: DownloadMediaEventUseCase
+) : ViewModel() {
 
     /**
      * The media event associated with this view model.
@@ -14,29 +23,21 @@ class MediaViewViewModel : ViewModel() {
 
     suspend fun like(): Boolean {
         Timber.d("Adding ${mediaEvent.id} to liked media")
-        delay(IO_DELAY)
-        return true
+        return likeMediaEvent(mediaEvent.id)
     }
 
     suspend fun dislike(): Boolean {
         Timber.d("Adding ${mediaEvent.id} to not liked media")
-        delay(IO_DELAY)
-        return true
+        return dislikeMediaEvent(mediaEvent.id)
     }
 
     suspend fun addToWatchList(): Boolean {
         Timber.d("Adding media ${mediaEvent.id} to the watch list")
-        delay(IO_DELAY)
-        return true
+        return addMediaEventToWatchList(mediaEvent.id)
     }
 
-    suspend fun download(): Boolean {
+    suspend fun download(): Uri {
         Timber.d("Starting media ${mediaEvent.id} download...")
-        delay(IO_DELAY)
-        return true
-    }
-
-    companion object {
-        private const val IO_DELAY = 500L
+        return downloadMediaEvent(mediaEvent.id)
     }
 }

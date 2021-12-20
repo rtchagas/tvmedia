@@ -12,6 +12,11 @@ internal val viewModelModule = module {
     }
 
     viewModel {
-        MediaViewViewModel()
+        MediaViewViewModel(
+            likeMediaEvent = get(),
+            dislikeMediaEvent = get(),
+            addMediaEventToWatchList = get(),
+            downloadMediaEvent = get()
+        )
     }
 }
