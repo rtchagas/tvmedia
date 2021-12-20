@@ -78,6 +78,10 @@ class NowPlayingAdapter(private val listener: (MediaEvent, View) -> Unit) :
                 // Broadcast Time
                 bindBroadcastTime(event)
 
+                // Live icon
+                ivItemMediaLive.isVisible = event.isLive
+                tvItemMediaLive.isVisible = event.isLive
+
                 // Click event
                 root.setOnClickListener { listener(event, ivItemMediaThumb) }
             }
