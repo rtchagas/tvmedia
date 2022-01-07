@@ -62,9 +62,7 @@ class NowPlayingAdapter(private val listener: (MediaEvent, View) -> Unit) :
             with(binding) {
 
                 // Thumbnail via Coil
-                val url = ImageResizeUtil.resize(originalUrl = event.image, height = thumbsHeight)
-                ivItemMediaThumb.load(url) { crossfade(true) }
-                ivItemMediaThumb.transitionName = event.id.toString()
+                bindThumbnail(event)
 
                 // Title
                 tvItemMediaTitle.text = event.title
@@ -85,6 +83,20 @@ class NowPlayingAdapter(private val listener: (MediaEvent, View) -> Unit) :
                 // Click event
                 root.setOnClickListener { listener(event, ivItemMediaThumb) }
             }
+        }
+
+        private fun bindThumbnail(event: MediaEvent) {
+
+            // Must be a unique name for every transition
+            binding.ivItemMediaThumb.transitionName = event.id.toString()
+
+            if (event.image == null) {
+                binding.ivItemMediaThumb.load(R.drawable.all_logo_tv4) { crossfade(true) }
+                return
+            }
+
+            val url = ImageResizeUtil.resize(originalUrl = event.image, height = thumbsHeight)
+            binding.ivItemMediaThumb.load(url) { crossfade(true) }
         }
 
         private fun bindBroadcastTime(event: MediaEvent) {

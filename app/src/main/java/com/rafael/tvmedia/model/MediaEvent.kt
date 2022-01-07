@@ -31,7 +31,7 @@ data class MediaEvent(
     val id: Long,
 
     @SerialName("image")
-    val image: String,
+    val image: String? = null,
 
     @SerialName("is_geo_restricted")
     val isGeoRestricted: Boolean,

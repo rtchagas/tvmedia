@@ -120,6 +120,13 @@ class MediaViewFragment :
     }
 
     private fun loadMediaThumbnail(event: MediaEvent, imageView: ImageView) {
+
+        if (event.image == null) {
+            imageView.load(R.drawable.all_logo_tv4)
+            startPostponedEnterTransition()
+            return
+        }
+
         val url = ImageResizeUtil.resize(originalUrl = event.image, height = thumbsMaxHeight)
         imageView.load(url) {
             // Only perform the shared transition when the thumbnail is loaded
