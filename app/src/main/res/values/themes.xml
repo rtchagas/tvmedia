@@ -18,6 +18,7 @@
 
         <!-- Surfaces -->
         <item name="colorSurface">@color/white</item>
+        <item name="android:colorBackground">@color/white</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
